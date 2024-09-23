@@ -1,27 +1,27 @@
-import { FlatList, View, StyleSheet } from "react-native";
-import RepositoryItem from "./RepositoryItem";
+import React from "react";
+import { Text } from "react-native";
 import useRepositories from "../hooks/useRepositories";
-
-const styles = StyleSheet.create({
-  separator: {
-    height: 10,
-  },
-});
-
-const ItemSeparator = () => <View style={styles.separator} />;
+import RepositoryListContainer from "./RepositoryListContainer";
 
 const RepositoryList = () => {
-  const { repositories } = useRepositories();
+  const { repositories, loading, fetchMore } = useRepositories({
+    searchKeyword: "",
+    first: 4,
+  });
 
-  const repositoryNodes = repositories
-    ? repositories.edges.map((edge) => edge.node)
-    : [];
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
+  const onEndReach = () => {
+    fetchMore();
+    console.log("You have reached the end of the list");
+  };
 
   return (
-    <FlatList
-      data={repositoryNodes}
-      ItemSeparatorComponent={ItemSeparator}
-      renderItem={({ item }) => <RepositoryItem item={item} />}
+    <RepositoryListContainer
+      repositories={repositories}
+      onEndReach={onEndReach}
     />
   );
 };

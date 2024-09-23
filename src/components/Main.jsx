@@ -6,6 +6,10 @@ import RepositoryList from "./RepositoryList";
 import SignIn from "./SignIn";
 import theme from "../theme";
 import useAuthStorage from "../hooks/useAuthStorage";
+import SingleRepository from "./SingleRepository";
+import ReviewForm from "./ReviewForm";
+import SignUp from "./SignUp";
+import MyReviews from "./MyReviews";
 
 const styles = StyleSheet.create({
   container: {
@@ -43,6 +47,10 @@ const Main = () => {
       <Routes>
         <Route path="/" element={<RepositoryList />} />
         <Route path="/signin" element={<SignIn onSignIn={handleSignIn} />} />
+        <Route path="/signup" element={<SignUp onSignUp={handleSignIn} />} />
+        <Route path="/:id" element={<SingleRepository />} />
+        <Route path="/review" element={<ReviewForm />} />
+        <Route path="/myreviews" element={<MyReviews />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </View>
